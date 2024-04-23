@@ -30,19 +30,20 @@ public class MemoryVacancyRepository implements VacancyRepository {
     @Override
     public Vacancy save(Vacancy vacancy) {
         vacancy.setId(nextId++);
+        vacancy.setCreationDate(LocalDateTime.now());
         vacancies.put(vacancy.getId(), vacancy);
         return vacancy;
     }
 
     @Override
-    public void deleteById(int id) {
-        vacancies.remove(id);
+    public boolean deleteById(int id) {
+        return vacancies.remove(id) != null;
     }
 
     @Override
     public boolean update(Vacancy vacancy) {
         return vacancies.computeIfPresent(vacancy.getId(), (id, oldVacancy) -> new Vacancy(oldVacancy.getId(),
-                vacancy.getTitle(), vacancy.getDescription(), vacancy.getCreationDate())) != null;
+                vacancy.getTitle(), vacancy.getDescription(), oldVacancy.getCreationDate())) != null;
     }
 
     @Override
