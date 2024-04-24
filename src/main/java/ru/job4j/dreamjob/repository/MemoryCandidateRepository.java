@@ -12,11 +12,11 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private int counterId = 1;
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "Ivanov Ivan", "Java, Maven, GIT", new Date()));
-        save(new Candidate(0, "Igor Yang", "Java, Maven, GIT, JUnit", new Date()));
-        save(new Candidate(0, "Roman Petrov", "Java, GIT, JOCOCO", new Date()));
-        save(new Candidate(0, "Andrey Volkov", "Java, C#, Python", new Date()));
-        save(new Candidate(0, "Aleksey Tolstoy", "Java, Lisp, Basic", new Date()));
+        save(new Candidate(0, "Ivanov Ivan", "Java, Maven, GIT"));
+        save(new Candidate(0, "Igor Yang", "Java, Maven, GIT, JUnit"));
+        save(new Candidate(0, "Roman Petrov", "Java, GIT, JOCOCO"));
+        save(new Candidate(0, "Andrey Volkov", "Java, C#, Python"));
+        save(new Candidate(0, "Aleksey Tolstoy", "Java, Lisp, Basic"));
     }
 
     public static MemoryCandidateRepository getInstance() {
@@ -31,14 +31,14 @@ public class MemoryCandidateRepository implements CandidateRepository {
     }
 
     @Override
-    public void deleteById(int id) {
-        candidates.remove(id);
+    public boolean deleteById(int id) {
+        return candidates.remove(id) != null;
     }
 
     @Override
     public boolean update(Candidate candidate) {
-        return candidates.computeIfPresent(candidate.getId(), (id, oldVal) -> new Candidate(id, candidate.getName(),
-                        candidate.getDescription(), candidate.getCreationDate())) != null;
+        candidate.setCreationDate(candidates.get(candidate.getId()).getCreationDate());
+        return candidates.computeIfPresent(candidate.getId(), (id, oldVal) -> candidate) != null;
     }
 
     @Override
