@@ -7,7 +7,6 @@ import java.util.*;
 
 @Repository
 public class MemoryCandidateRepository implements CandidateRepository {
-    private static final MemoryCandidateRepository INSTANCE = new MemoryCandidateRepository();
     private Map<Integer, Candidate> candidates = new HashMap<>();
     private int counterId = 1;
 
@@ -17,10 +16,6 @@ public class MemoryCandidateRepository implements CandidateRepository {
         save(new Candidate(0, "Roman Petrov", "Java, GIT, JOCOCO"));
         save(new Candidate(0, "Andrey Volkov", "Java, C#, Python"));
         save(new Candidate(0, "Aleksey Tolstoy", "Java, Lisp, Basic"));
-    }
-
-    public static MemoryCandidateRepository getInstance() {
-        return INSTANCE;
     }
 
     @Override
