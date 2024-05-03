@@ -17,12 +17,12 @@ public class MemoryVacancyRepository implements VacancyRepository {
     private final AtomicInteger nextId = new AtomicInteger(1);
 
     private MemoryVacancyRepository() {
-        save(new Vacancy(0, "Intern Java Developer", "ИП \"ТАРАН\", требования: без опыта", true, 1));
-        save(new Vacancy(0, "Junior Java Developer", "ЧОП \"ВАРЯГ\", требования: 1 год опыта", true, 1));
-        save(new Vacancy(0, "Junior+ Java Developer", "Infinity Solution, требования: 2 года опыта", true, 1));
-        save(new Vacancy(0, "Middle Java Developer", "Теньков, требования: 2-3 года опыта", true, 1));
-        save(new Vacancy(0, "Middle+ Java Developer", "Сбер, требования: 3 года опыта", true, 2));
-        save(new Vacancy(0, "Senior Java Developer", "Яндекс, требования: 3-6 лет опыта", true, 3));
+        save(new Vacancy(0, "Intern Java Developer", "ИП \"ТАРАН\", требования: без опыта", true, 1, 0));
+        save(new Vacancy(0, "Junior Java Developer", "ЧОП \"ВАРЯГ\", требования: 1 год опыта", true, 1, 0));
+        save(new Vacancy(0, "Junior+ Java Developer", "Infinity Solution, требования: 2 года опыта", true, 1, 0));
+        save(new Vacancy(0, "Middle Java Developer", "Теньков, требования: 2-3 года опыта", true, 1, 0));
+        save(new Vacancy(0, "Middle+ Java Developer", "Сбер, требования: 3 года опыта", true, 2, 0));
+        save(new Vacancy(0, "Senior Java Developer", "Яндекс, требования: 3-6 лет опыта", true, 3, 0));
     }
 
     @Override

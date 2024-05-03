@@ -17,11 +17,11 @@ public class MemoryCandidateRepository implements CandidateRepository {
     private final AtomicInteger counterId = new AtomicInteger(1);
 
     private MemoryCandidateRepository() {
-        save(new Candidate(0, "Ivanov Ivan", "Java, Maven, GIT", 1));
-        save(new Candidate(0, "Igor Yang", "Java, Maven, GIT, JUnit", 1));
-        save(new Candidate(0, "Roman Petrov", "Java, GIT, JACOCO", 2));
-        save(new Candidate(0, "Andrey Volkov", "Java, C#, Python", 3));
-        save(new Candidate(0, "Aleksey Tolstoy", "Java, Lisp, Basic", 3));
+        save(new Candidate(0, "Ivanov Ivan", "Java, Maven, GIT", 1, 0));
+        save(new Candidate(0, "Igor Yang", "Java, Maven, GIT, JUnit", 1, 0));
+        save(new Candidate(0, "Roman Petrov", "Java, GIT, JACOCO", 2, 0));
+        save(new Candidate(0, "Andrey Volkov", "Java, C#, Python", 3, 0));
+        save(new Candidate(0, "Aleksey Tolstoy", "Java, Lisp, Basic", 3, 0));
     }
 
     @Override
