@@ -100,6 +100,7 @@ public class Sql2oVacancyRepositoryTest {
                 vacancy.getId(), "new title", "new description", creationDate.plusDays(1),
                 !vacancy.getVisible(), 1, file.getId()
         );
+        updatedVacancy.setCreationDate(creationDate);
         var isUpdated = sql2oVacancyRepository.update(updatedVacancy);
         var savedVacancy = sql2oVacancyRepository.findById(updatedVacancy.getId()).get();
         assertThat(isUpdated).isTrue();
