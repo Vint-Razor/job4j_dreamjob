@@ -1,6 +1,5 @@
 package ru.job4j.dreamjob.repository;
 
-import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -10,7 +9,6 @@ import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 import ru.job4j.dreamjob.model.User;
 
-import java.util.Objects;
 import java.util.Optional;
 
 @Repository
@@ -24,7 +22,6 @@ public class Sql2oUserRepository implements UserRepository {
 
     @Override
     public Optional<User> save(User user) {
-        Optional<User> rsl = Optional.empty();
         try (Connection connection = sql2o.open()) {
             String sql = """
                     INSERT INTO users(email, name, password)
@@ -35,26 +32,27 @@ public class Sql2oUserRepository implements UserRepository {
                     .addParameter("name", user.getName())
                     .addParameter("password", user.getPassword());
             int generatedKey = query.executeUpdate().getKey(Integer.class);
-            if (generatedKey > 0) {
-                user.setId(generatedKey);
-                rsl = Optional.of(user);
-            }
+            user.setId(generatedKey);
         } catch (Sql2oException e) {
             LOG.error("Ошибка сохранения пользователя");
+            return Optional.empty();
         }
-        return rsl;
+        return Optional.of(user);
     }
 
     @Override
     public Optional<User> findByEmailAndPassword(String email, String password) {
-        Optional<User> rsl = Optional.empty();
         try (Connection connection = sql2o.open()) {
-            Query query = connection.createQuery("SELECT * FROM users  WHERE email = :email");
-            User user = query.addParameter("email", email).executeAndFetchFirst(User.class);
-            if (user != null && password.equals(user.getPassword())) {
-                rsl = Optional.of(user);
-            }
-            return rsl;
+            String sql = """
+                    SELECT * FROM users
+                    WHERE email = :email
+                    AND password = :password;
+                    """;
+            Query query = connection.createQuery(sql);
+            User user = query.addParameter("email", email)
+                    .addParameter("password", password)
+                    .executeAndFetchFirst(User.class);
+            return Optional.ofNullable(user);
         }
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 @Controller
@@ -32,7 +31,7 @@ public class UserController {
         Optional<User> optionalUser = userService.save(user);
         if (optionalUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с таким email уже существует");
-            return "errors/404";
+            return "users/register";
         }
         return "redirect:/vacancies";
     }
