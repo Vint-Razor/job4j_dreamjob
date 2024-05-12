@@ -2,7 +2,6 @@ package ru.job4j.dreamjob.filter;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import ru.job4j.dreamjob.controller.UserController;
 import ru.job4j.dreamjob.model.User;
 
 import javax.servlet.FilterChain;
@@ -25,7 +24,11 @@ public class SessionFilter extends HttpFilter {
     }
 
     private void addUserToSession(HttpSession session, HttpServletRequest request) {
-        User user = UserController.checkingUserLogin(session);
+        var user = (User) session.getAttribute("user");
+        if (user == null) {
+            user = new User();
+            user.setName("Гость");
+        }
         request.setAttribute("user", user);
     }
 }
